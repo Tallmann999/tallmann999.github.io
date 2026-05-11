@@ -79,7 +79,7 @@ button:focus-visible {
   font-size: 20px;
   font-weight: 800;
   letter-spacing: 0;
-  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .site-nav {
@@ -140,8 +140,9 @@ p {
 
 h1 {
   margin-bottom: 12px;
-  font-size: clamp(44px, 7vw, 76px);
-  line-height: 1.02;
+  max-width: 900px;
+  font-size: clamp(38px, 5.5vw, 64px);
+  line-height: 1.08;
   letter-spacing: 0;
 }
 

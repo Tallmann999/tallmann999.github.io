@@ -1,4 +1,4 @@
-# Tallmann999 Portfolio
+# Антон Вагабов (Tallmann) Portfolio
 
 Личное портфолио Unity / C# разработчика и начинающего геймдизайнера.
 
