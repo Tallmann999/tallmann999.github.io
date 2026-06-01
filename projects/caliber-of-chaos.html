@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caliber of Chaos — Case Study</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+n  <header class="project-hero">
+    <a href="../index.html">← Back to Portfolio</a>
+
+n    <h1>Caliber of Chaos</h1>
+
+n    <p class="project-subtitle">
+      2D / 2.5D action roguelite shooter with elemental seal-based combat.
+    </p>
+
+n    <div class="project-buttons">
+      <a href="https://your-demo-link-here" target="_blank">Play Demo</a>
+      <a href="https://your-itch-link-here" target="_blank">Itch.io</a>
+    </div>
+  </header>
+
+n  <main class="case-study">
+
+n    <section>
+      <img 
+        class="project-gif" 
+        src="../assets/projects/caliber-of-chaos/gameplay.gif" 
+        alt="Caliber of Chaos gameplay GIF"
+      />
+    </section>
+
+n    <section>
+      <h2>Project Overview</h2>
+      <p>
+        Caliber of Chaos is a 2D action shooter prototype where enemies are protected
+        by elemental seals. The player must use the correct weapon element to break
+        seals before dealing real HP damage.
+      </p>
+      <p>
+        The main design goal is to combine bullet-hell action with puzzle-like combat
+        decisions.
+      </p>
+    </section>
+
+    <section>
+      <h2>My Role</h2>
+      <p>
+        Solo Unity / C# Developer. I designed and implemented gameplay systems,
+        enemy behavior, elemental combat, mutation mechanics, UI feedback, and
+        playable WebGL demo flow.
+      </p>
+    </section>
+
+    <section>
+      <h2>Core Gameplay Loop</h2>
+      <ol>
+        <li>Enter a corrupted area.</li>
+        <li>Identify enemy seals and mutation types.</li>
+        <li>Use the correct elemental weapon.</li>
+        <li>Break seals in the correct order.</li>
+        <li>Damage enemies after protection is removed.</li>
+        <li>Clean corrupted objects and transform some of them into allies.</li>
+        <li>Survive waves and move to the next encounter.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Implemented Systems</h2>
+
+      <h3>Elemental Combat System</h3>
+      <p>
+        The combat system is based on several element types: Bio Red, Crystal Blue,
+        Purge Green, and Gold Yellow. Enemies can react differently depending on
+        their current mutation and active seal.
+      </p>
+
+      <h3>Seal System</h3>
+      <p>
+        Some enemies and objects have elemental seals. A normal attack cannot damage
+        them until the correct seal is broken. This creates a combat-puzzle layer on
+        top of the shooter gameplay.
+      </p>
+
+      <h3>Enemy Behavior</h3>
+      <p>
+        The prototype includes melee enemies, shooter enemies, patrol enemies,
+        elite enemies, and spawner-based enemy logic.
+      </p>
+
+      <h3>Mutation / Biome System</h3>
+      <p>
+        Mutation zones affect the ground, enemies, and objects. Purge Green can clean
+        corrupted objects, while other elements can create danger zones or change
+        enemy behavior.
+      </p>
+
+      <h3>Environmental Allies</h3>
+      <p>
+        Some objects can be transformed into temporary allies. For example, trees can
+        become friendly units and help the player fight enemies for a limited time.
+      </p>
+    </section>
+
+    <section>
+      <h2>Technical Architecture</h2>
+      <p>
+        The project is built with small Unity components instead of one large
+        controller. The goal is to keep gameplay logic readable, modular, and easier
+        to extend.
+      </p>
+
+      <pre><code>Player
+ ├── PlayerMovement
+ ├── PlayerWeapon
+ ├── InteractionHandler
+ └── Inventory
+
+Weapon
+ ├── WeaponFrame
+ ├── WeaponCore
+ ├── WeaponMod
+ └── BulletSpawner
+
+Enemy
+ ├── EnemyMovement
+ ├── EnemyBehaviour
+ ├── Health
+ ├── MutationController
+ └── SpellNodesCounter
+
+Bullet
+ ├── BulletMover
+ ├── BulletView
+ ├── BulletContext
+ └── Impact Processing</code></pre>
+    </section>
+
+    <section>
+      <h2>Technical Challenge</h2>
+
+      <h3>Problem</h3>
+      <p>
+        Bullet collision logic became too large. It started handling damage, seals,
+        mutation, faction rules, object interactions, explosions, and pool return logic.
+      </p>
+
+      <h3>Solution</h3>
+      <p>
+        I started separating bullet behavior into smaller responsibilities: movement,
+        visuals, collision processing, damage rules, seal interaction, and pool return
+        logic. This makes the system easier to extend with new elemental effects.
+      </p>
+    </section>
+
+    <section>
+      <h2>Current Status</h2>
+      <ul>
+        <li>Core shooting — implemented</li>
+        <li>Enemy behavior prototypes — implemented</li>
+        <li>Seal system — implemented</li>
+        <li>Mutation object interactions — implemented</li>
+        <li>Playable demo build — implemented</li>
+        <li>More enemy variations — in progress</li>
+        <li>Better UI feedback — in progress</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What This Project Demonstrates</h2>
+      <ul>
+        <li>Unity gameplay programming</li>
+        <li>C# component-based architecture</li>
+        <li>Enemy AI behavior design</li>
+        <li>Elemental combat systems</li>
+        <li>Object interaction systems</li>
+        <li>Prototype-to-demo workflow</li>
+      </ul>
+    </section>
+
+n  </main>
+
+n</body>
+</html>
