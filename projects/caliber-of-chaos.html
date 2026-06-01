@@ -1,119 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Caliber of Chaos — Case Study</title>
-  <link rel="stylesheet" href="../style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Caliber of Chaos — Case Study</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      :root{
+        --bio-red: #ef4444;
+        --crystal-blue: #38bdf8;
+        --purge-green: #22c55e;
+        --gold-yellow: #f59e0b;
+      }
+      body { background: #07111a; color: #e6eef6; font-family: Inter, system-ui, sans-serif; }
+      .project-hero{ padding:48px 24px; text-align:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-bottom:1px solid rgba(255,255,255,0.03); }
+      .project-hero a{ color:var(--crystal-blue); font-weight:700; display:inline-block; margin-bottom:12px }
+      .project-hero h1{ font-size: clamp(34px,5vw,56px); margin:8px 0 6px; letter-spacing: -.02em }
+      .project-hero p{ margin:0 0 14px; color: #cfe8f6; font-weight:600 }
+      .badges{ display:inline-flex; gap:8px; margin:12px 0 18px }
+      .badge{ padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; color:#07111a }
+      .badge.red{ background:var(--bio-red) }
+      .badge.blue{ background:var(--crystal-blue) }
+      .badge.green{ background:var(--purge-green) }
+      .badge.gold{ background:var(--gold-yellow) }
+      .hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px }
+      .hero-ctas .button{ padding:12px 18px; border-radius:10px; font-weight:800 }
+      .hero-ctas .primary{ background:var(--crystal-blue); color:#07111a }
+      .hero-ctas .muted{ background:rgba(255,255,255,0.03); color:#cfe8f6 }
 
-n  <header class="project-hero">
-    <a href="../index.html">← Back to Portfolio</a>
+      .case-layout{ max-width:1100px; margin:36px auto; padding:0 20px; display:grid; gap:28px }
+      .media-wrap{ background:#0b1320; border:1px solid rgba(255,255,255,0.03); border-radius:10px; min-height:320px; display:flex; align-items:center; justify-content:center }
+      .media-placeholder{ color:#94a3b8; text-transform:uppercase; font-weight:800 }
+      .feature-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
+      .card{ background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px }
+      .card h3{ margin:0 0 8px; font-size:16px }
+      .timeline{ display:flex; gap:12px; flex-wrap:wrap; align-items:center }
+      .step{ background:rgba(255,255,255,0.02); padding:12px 14px; border-radius:8px; min-width:160px }
+      .systems-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
+      .arch{ background:linear-gradient(180deg, rgba(10,16,24,0.6), rgba(4,8,12,0.6)); padding:18px; border-radius:10px; border:1px solid rgba(255,255,255,0.04) }
+      pre{ background:#051016; padding:12px; border-radius:8px; overflow:auto }
+      .two-col{ display:grid; grid-template-columns:1fr 320px; gap:24px }
+      @media(max-width:920px){ .two-col{ grid-template-columns:1fr } }
+      .final-cta{ text-align:center; padding:28px 0 }
+      .final-cta .button{ font-size:18px; padding:14px 22px; border-radius:12px }
+    </style>
+  </head>
+  <body>
 
-n    <h1>Caliber of Chaos</h1>
+    <header class="project-hero">
+      <a href="../index.html">← Back to Portfolio</a>
+      <h1>Caliber of Chaos</h1>
+      <p class="project-subtitle">2D top-down action shooter prototype about cleansing a corrupted world.</p>
 
-n    <p class="project-subtitle">
-      2D / 2.5D action roguelite shooter with elemental seal-based combat.
-    </p>
+      <div class="badges">
+        <span class="badge red">Bio Red</span>
+        <span class="badge blue">Crystal Blue</span>
+        <span class="badge green">Purge Green</span>
+        <span class="badge gold">Gold Yellow</span>
+      </div>
 
-n    <div class="project-buttons">
-      <a href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Play Demo</a>
-      <a href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Itch.io</a>
-    </div>
-  </header>
+      <div class="hero-ctas">
+        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Play Demo</a>
+        <a class="button muted" href="../index.html">Back to Portfolio</a>
+        <div style="width:100%;max-width:640px;margin:0 auto"></div>
+      </div>
+    </header>
 
-n  <main class="case-study">
+    <main class="case-layout">
 
-n    <section>
-      <img 
-        class="project-gif" 
-        src="../assets/projects/caliber-of-chaos/gameplay.gif" 
-        alt="Caliber of Chaos gameplay GIF"
-      />
-    </section>
+      <!-- Big media / GIF (left empty until asset available) -->
+      <div class="media-wrap">
+        <img id="project-gif" src="../assets/projects/caliber-of-chaos/gameplay.gif" alt="Caliber of Chaos gameplay GIF" style="max-width:100%;max-height:100%;display:block;" onerror="this.style.display='none';document.getElementById('gif-placeholder').style.display='flex'" />
+        <div id="gif-placeholder" class="media-placeholder" style="display:none">Gameplay GIF coming soon — 5–10s demo clip</div>
+      </div>
 
-n    <section>
-      <h2>Project Overview</h2>
-      <p>
-        Caliber of Chaos is a 2D action shooter prototype where enemies are protected
-        by elemental seals. The player must use the correct weapon element to break
-        seals before dealing real HP damage.
-      </p>
-      <p>
-        The main design goal is to combine bullet-hell action with puzzle-like combat
-        decisions.
-      </p>
-    </section>
+      <!-- Quick summary cards -->
+      <div class="feature-cards">
+        <div class="card"><h3>Role</h3><p>Unity / C# Gameplay Developer</p></div>
+        <div class="card"><h3>Genre</h3><p>2D Top-Down Action Shooter / Roguelite</p></div>
+        <div class="card"><h3>Core Hook</h3><p>Elemental seal-based combat that mixes shooter action with puzzle decisions</p></div>
+        <div class="card"><h3>Build</h3><p>WebGL playable demo</p></div>
+      </div>
 
-    <section>
-      <h2>My Role</h2>
-      <p>
-        Solo Unity / C# Developer. I designed and implemented gameplay systems,
-        enemy behavior, elemental combat, mutation mechanics, UI feedback, and
-        playable WebGL demo flow.
-      </p>
-    </section>
+      <!-- Core idea and layout two-column -->
+      <div class="two-col">
+        <section class="card">
+          <h3>Core Idea</h3>
+          <p>Caliber of Chaos centers on elemental seals: enemies and objects are protected by elements that require matching weapon elements to break. This creates a combat-puzzle layer on top of fast shooter gameplay.</p>
+          <h4 style="margin-top:12px">Core Gameplay Loop</h4>
+          <div class="timeline">
+            <div class="step">1. Enter corrupted area</div>
+            <div class="step">2. Identify seals & mutations</div>
+            <div class="step">3. Switch weapon element</div>
+            <div class="step">4. Break seals & damage</div>
+            <div class="step">5. Clean objects / gain allies</div>
+          </div>
+        </section>
 
-    <section>
-      <h2>Core Gameplay Loop</h2>
-      <ol>
-        <li>Enter a corrupted area.</li>
-        <li>Identify enemy seals and mutation types.</li>
-        <li>Use the correct elemental weapon.</li>
-        <li>Break seals in the correct order.</li>
-        <li>Damage enemies after protection is removed.</li>
-        <li>Clean corrupted objects and transform some of them into allies.</li>
-        <li>Survive waves and move to the next encounter.</li>
-      </ol>
-    </section>
+        <aside class="card">
+          <h3>My Role / Contribution</h3>
+          <p>Solo Unity / C# Gameplay Developer — implemented player systems, weapon switching, projectile logic, enemy behavior, and WebGL demo flow.</p>
+          <h3 style="margin-top:12px">Technical Focus</h3>
+          <ul>
+            <li>Component-based gameplay architecture</li>
+            <li>Projectile logic & collision separation</li>
+            <li>Enemy behaviour and mutation systems</li>
+            <li>Planned object pooling and seal-based combat scalability</li>
+          </ul>
+        </aside>
+      </div>
 
-    <section>
-      <h2>Implemented Systems</h2>
+      <!-- Implemented systems as cards -->
+      <section>
+        <h3 style="margin-bottom:12px">Implemented Gameplay Systems</h3>
+        <div class="systems-grid">
+          <div class="card">
+            <h3>Elemental Combat System</h3>
+            <p>Multiple element types (Bio Red, Crystal Blue, Purge Green, Gold Yellow) change weapon interactions and enemy reactions.</p>
+          </div>
+          <div class="card">
+            <h3>Seal System</h3>
+            <p>Seals protect enemies and objects — break seals with matching elements to enable damage.</p>
+          </div>
+          <div class="card">
+            <h3>Enemy Behavior</h3>
+            <p>Melee, shooter, patrol, elite and spawner logic with mutation states that alter patterns.</p>
+          </div>
+          <div class="card">
+            <h3>Mutation / Biome System</h3>
+            <p>Zones modify ground, enemies and objects — Purge Green can clean and transform objects.</p>
+          </div>
+          <div class="card">
+            <h3>Environmental Allies</h3>
+            <p>Transformable objects (trees, devices) become temporary allies to assist in combat.</p>
+          </div>
+        </div>
+      </section>
 
-      <h3>Elemental Combat System</h3>
-      <p>
-        The combat system is based on several element types: Bio Red, Crystal Blue,
-        Purge Green, and Gold Yellow. Enemies can react differently depending on
-        their current mutation and active seal.
-      </p>
-
-      <h3>Seal System</h3>
-      <p>
-        Some enemies and objects have elemental seals. A normal attack cannot damage
-        them until the correct seal is broken. This creates a combat-puzzle layer on
-        top of the shooter gameplay.
-      </p>
-
-      <h3>Enemy Behavior</h3>
-      <p>
-        The prototype includes melee enemies, shooter enemies, patrol enemies,
-        elite enemies, and spawner-based enemy logic.
-      </p>
-
-      <h3>Mutation / Biome System</h3>
-      <p>
-        Mutation zones affect the ground, enemies, and objects. Purge Green can clean
-        corrupted objects, while other elements can create danger zones or change
-        enemy behavior.
-      </p>
-
-      <h3>Environmental Allies</h3>
-      <p>
-        Some objects can be transformed into temporary allies. For example, trees can
-        become friendly units and help the player fight enemies for a limited time.
-      </p>
-    </section>
-
-    <section>
-      <h2>Technical Architecture</h2>
-      <p>
-        The project is built with small Unity components instead of one large
-        controller. The goal is to keep gameplay logic readable, modular, and easier
-        to extend.
-      </p>
-
-      <pre><code>Player
+      <!-- Architecture -->
+      <section class="arch card">
+        <h3>Technical Architecture</h3>
+        <p>The codebase favors small, focused components for maintainability and extension.</p>
+        <pre><code>Player
  ├── PlayerMovement
  ├── PlayerWeapon
  ├── InteractionHandler
@@ -137,51 +165,53 @@ Bullet
  ├── BulletView
  ├── BulletContext
  └── Impact Processing</code></pre>
-    </section>
+      </section>
 
-    <section>
-      <h2>Technical Challenge</h2>
+      <!-- Problem / Solution -->
+      <section class="card">
+        <h3>Technical Challenge — Problem → Risk → Solution → Result</h3>
+        <h4>Problem</h4>
+        <p>Bullet collision logic consolidated many responsibilities (damage, seals, mutation, faction, pooling), becoming hard to maintain.</p>
+        <h4>Risk</h4>
+        <p>Growing complexity slowed iteration and added bugs when adding new elemental effects.</p>
+        <h4>Solution</h4>
+        <p>Split bullet responsibilities: movement, visuals, collision processing, damage rules, seal interaction, and pool return logic.</p>
+        <h4>Result</h4>
+        <p>Cleaner, extensible bullet pipeline enabling fast iteration on elemental effects and fewer side-effects.</p>
+      </section>
 
-      <h3>Problem</h3>
-      <p>
-        Bullet collision logic became too large. It started handling damage, seals,
-        mutation, faction rules, object interactions, explosions, and pool return logic.
-      </p>
+      <!-- Roadmap / Status -->
+      <section class="card">
+        <h3>Roadmap / Current Status</h3>
+        <ul>
+          <li>Core shooting — implemented ✅</li>
+          <li>Enemy behavior prototypes — implemented ✅</li>
+          <li>Seal system — implemented ✅</li>
+          <li>Mutation interactions — implemented ✅</li>
+          <li>Playable demo build — implemented ✅</li>
+          <li>More enemy variations — in progress ⚙️</li>
+          <li>Better UI feedback / polish — in progress ⚙️</li>
+        </ul>
+      </section>
 
-      <h3>Solution</h3>
-      <p>
-        I started separating bullet behavior into smaller responsibilities: movement,
-        visuals, collision processing, damage rules, seal interaction, and pool return
-        logic. This makes the system easier to extend with new elemental effects.
-      </p>
-    </section>
+      <section class="card">
+        <h3>What This Project Demonstrates</h3>
+        <div class="feature-cards">
+          <div class="card"><strong>Unity gameplay programming</strong></div>
+          <div class="card"><strong>C# component-based architecture</strong></div>
+          <div class="card"><strong>Enemy AI behaviour</strong></div>
+          <div class="card"><strong>Elemental combat systems</strong></div>
+          <div class="card"><strong>Object interaction systems</strong></div>
+          <div class="card"><strong>Prototype→demo workflow</strong></div>
+        </div>
+      </section>
 
-    <section>
-      <h2>Current Status</h2>
-      <ul>
-        <li>Core shooting — implemented</li>
-        <li>Enemy behavior prototypes — implemented</li>
-        <li>Seal system — implemented</li>
-        <li>Mutation object interactions — implemented</li>
-        <li>Playable demo build — implemented</li>
-        <li>More enemy variations — in progress</li>
-        <li>Better UI feedback — in progress</li>
-      </ul>
-    </section>
+      <!-- Final CTA -->
+      <div class="final-cta">
+        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Play Demo on Itch.io</a>
+      </div>
 
-    <section>
-      <h2>What This Project Demonstrates</h2>
-      <ul>
-        <li>Unity gameplay programming</li>
-        <li>C# component-based architecture</li>
-        <li>Enemy AI behavior design</li>
-        <li>Elemental combat systems</li>
-        <li>Object interaction systems</li>
-        <li>Prototype-to-demo workflow</li>
-      </ul>
-    </section>
+    </main>
 
-n  </main>
-
-n</body>
+  </body>
 </html>
