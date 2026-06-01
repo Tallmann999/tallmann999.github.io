@@ -410,6 +410,61 @@ h3 {
   color: var(--color-text-muted);
 }
 
+/* Project card specific layout: buttons in 2 columns */
+.project-card .project-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Make buttons occupy full column and look consistent */
+.project-card .project-links .button,
+.project-card .project-links a.button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Inactive / disabled GitHub button style (muted, GitHub-like) */
+.button[disabled],
+.button[aria-disabled="true"],
+.button.disabled {
+  background: rgba(148, 163, 184, 0.08);
+  color: var(--color-text-muted);
+  border-color: rgba(148, 163, 184, 0.12);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Larger project headings and emphasized meta labels */
+.project-body h3 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.project-subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.project-meta span {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.project-bullets {
+  margin: 12px 0 16px 0;
+  padding-left: 18px;
+}
+
+.project-bullets li {
+  margin-bottom: 6px;
+}
+
 .contacts-card {
   display: grid;
   gap: 14px;
