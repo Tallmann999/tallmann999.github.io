@@ -1,209 +1,819 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Caliber of Chaos - разбор проекта</title>
-    <link rel="stylesheet" href="../styles.css" />
-    <style>
-      :root{
-        --bio-red: #ef4444;
-        --crystal-blue: #38bdf8;
-        --purge-green: #22c55e;
-        --gold-yellow: #f59e0b;
-      }
-      body { background: #07111a; color: #e6eef6; font-family: Inter, system-ui, sans-serif; }
-      .project-hero{ display:flex; flex-direction:column; align-items:center; padding:48px 24px; text-align:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-bottom:1px solid rgba(255,255,255,0.03); }
-      .project-hero a{ color:var(--crystal-blue); font-weight:700; display:inline-block; margin-bottom:12px }
-      .project-hero h1{ font-size: clamp(34px,5vw,56px); margin:8px 0 6px; letter-spacing: -.02em }
-      .project-hero p{ margin:0 0 14px; color: #cfe8f6; font-weight:600 }
-      .badges{ display:inline-flex; gap:8px; margin:12px 0 18px }
-      .badge{ padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; color:#07111a }
-      .badge.red{ background:var(--bio-red) }
-      .badge.blue{ background:var(--crystal-blue) }
-      .badge.green{ background:var(--purge-green) }
-      .badge.gold{ background:var(--gold-yellow) }
-      .hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px }
-      .hero-ctas .button{ padding:12px 18px; border-radius:10px; font-weight:800 }
-      .hero-ctas .primary{ background:var(--crystal-blue); color:#07111a }
-      .hero-ctas .muted{ background:rgba(255,255,255,0.03); color:#cfe8f6 }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Калибр Хаоса — Case Study</title>
+  <meta name="description" content="Калибр Хаоса — case study Unity/C# action-puzzle shooter: модульное оружие, elemental seals, mutation grid, Bullet Impact Pipeline, enemy AI." />
+  <style>
+    :root {
+      --bg: #090b12;
+      --bg-2: #0d1220;
+      --panel: rgba(17, 24, 39, 0.82);
+      --panel-2: rgba(15, 23, 42, 0.92);
+      --text: #eef5ff;
+      --muted: #a8b3c7;
+      --soft: #6b7894;
+      --line: rgba(148, 163, 184, 0.22);
+      --cyan: #24d8ff;
+      --blue: #6c8cff;
+      --violet: #b66cff;
+      --green: #72ffb6;
+      --gold: #ffd36b;
+      --red: #ff6978;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius: 24px;
+      --max: 1180px;
+    }
 
-      .case-layout{ max-width:1100px; margin:36px auto; padding:0 20px; display:grid; gap:28px }
-      .media-wrap{ background:#0b1320; border:1px solid rgba(255,255,255,0.03); border-radius:10px; min-height:320px; display:flex; align-items:center; justify-content:center }
-      .media-placeholder{ color:#94a3b8; text-transform:uppercase; font-weight:800 }
-      .feature-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
-      .card{ background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px }
-      .card h3{ margin:0 0 8px; font-size:16px }
-      .timeline{ display:flex; gap:12px; flex-wrap:wrap; align-items:center }
-      .step{ background:rgba(255,255,255,0.02); padding:12px 14px; border-radius:8px; min-width:160px }
-      .systems-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px }
-      .arch{ background:linear-gradient(180deg, rgba(10,16,24,0.6), rgba(4,8,12,0.6)); padding:18px; border-radius:10px; border:1px solid rgba(255,255,255,0.04) }
-      pre{ background:#051016; padding:12px; border-radius:8px; overflow:auto }
-      .two-col{ display:grid; grid-template-columns:1fr 320px; gap:24px }
-      @media(max-width:920px){ .two-col{ grid-template-columns:1fr } }
-      .final-cta{ text-align:center; padding:28px 0 }
-      .final-cta .button{ font-size:18px; padding:14px 22px; border-radius:12px }
-    </style>
-  </head>
-  <body>
+    * { box-sizing: border-box; }
 
-    <header class="project-hero">
-      <a href="../index.html">← Назад к портфолио</a>
-      <h1>Caliber of Chaos</h1>
-      <p class="project-subtitle">Прототип 2D top-down action shooter о зачистке зараженного мира.</p>
+    html { scroll-behavior: smooth; }
 
-      <div class="hero-ctas">
-        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Играть в демо</a>
-        <a class="button muted" href="../index.html">Назад к портфолио</a>
-      </div>
-    </header>
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 5%, rgba(36, 216, 255, 0.18), transparent 32%),
+        radial-gradient(circle at 80% 8%, rgba(182, 108, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 60% 70%, rgba(114, 255, 182, 0.09), transparent 34%),
+        linear-gradient(180deg, #070911 0%, #0a0d15 42%, #080a10 100%);
+      line-height: 1.65;
+    }
 
-    <main class="case-layout">
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
 
-      <!-- Big media / GIF (left empty until asset available) -->
-      <div class="media-wrap">
-        <img id="project-gif" src="../assets/projects/caliber-of-chaos/gameplay.gif" alt="GIF с геймплеем Caliber of Chaos" style="max-width:100%;max-height:100%;display:block;" onerror="this.style.display='none';document.getElementById('gif-placeholder').style.display='flex'" />
-        <div id="gif-placeholder" class="media-placeholder" style="display:none">Gameplay GIF скоро появится - демо-клип на 5-10 секунд</div>
-      </div>
+    a { color: inherit; text-decoration: none; }
 
-      <!-- Quick summary cards -->
-      <div class="feature-cards">
-        <div class="card"><h3>Роль</h3><p>Unity / C# Gameplay Developer</p></div>
-        <div class="card"><h3>Жанр</h3><p>2D top-down action shooter / roguelite</p></div>
-        <div class="card"><h3>Ключевая идея</h3><p>Боевая система реализованна </p></div>
-        <div class="card"><h3>Билд</h3><p>Играбельное WebGL-демо</p></div>
-      </div>
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
 
-      <!-- Core idea and layout two-column -->
-      <div class="two-col">
-        <section class="card">
-          <h3>Основная идея</h3>
-          <p>Caliber of Chaos строится вокруг элементальных печатей: враги и объекты защищены стихиями, а для взлома защиты нужно подобрать соответствующий элемент оружия. Это добавляет к быстрому шутерному геймплею слой боевой головоломки.</p>
-          <h4 style="margin-top:12px">Основной игровой цикл</h4>
-          <div class="timeline">
-            <div class="step">1. Войти в зараженную зону</div>
-            <div class="step">2. Определить печати и мутации</div>
-            <div class="step">3. Переключить элемент оружия</div>
-            <div class="step">4. Сломать печати и нанести урон</div>
-            <div class="step">5. Очистить объекты / получить союзников</div>
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(9, 11, 18, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+
+    .back-link:hover { color: var(--cyan); }
+
+    .nav-links { display: flex; align-items: center; gap: 16px; color: var(--muted); font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero { padding: 82px 0 52px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(36, 216, 255, .26);
+      background: rgba(36, 216, 255, .08);
+      color: #baf4ff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 22px 0 16px;
+      font-size: clamp(46px, 7vw, 84px);
+      line-height: .95;
+      letter-spacing: -.06em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--cyan), var(--violet) 55%, var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      max-width: 720px;
+      color: #dbe7ff;
+      font-size: clamp(18px, 2.1vw, 23px);
+      line-height: 1.48;
+      margin: 0 0 24px;
+    }
+
+    .sublead {
+      color: var(--muted);
+      max-width: 710px;
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 28px 0; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 900;
+      border: 1px solid var(--line);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); border-color: rgba(36, 216, 255, .5); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(36,216,255,.95), rgba(108,140,255,.94));
+      color: #04111d;
+      border-color: transparent;
+      box-shadow: 0 16px 50px rgba(36,216,255,.18);
+    }
+
+    .btn-secondary { background: rgba(255,255,255,.055); color: var(--text); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .055);
+      color: #d7e4f8;
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-card {
+      position: relative;
+      border: 1px solid rgba(148,163,184,.22);
+      background: linear-gradient(180deg, rgba(17,24,39,.94), rgba(11,16,29,.94));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(36,216,255,.28), transparent 36%, rgba(182,108,255,.22));
+      pointer-events: none;
+    }
+
+    .hero-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; opacity: .9; }
+
+    .soon-media {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 260px;
+      aspect-ratio: 16 / 10;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(36,216,255,.1), rgba(182,108,255,.08)),
+        rgba(255,255,255,.035);
+      color: var(--cyan);
+      font-size: clamp(34px, 6vw, 72px);
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .video-soon {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 36px auto 0;
+      border: 1px solid rgba(36,216,255,.24);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card-info { position: relative; padding: 20px; display: grid; gap: 12px; }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    .metric {
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+    }
+
+    .metric strong { display: block; color: var(--cyan); font-size: 24px; line-height: 1; margin-bottom: 8px; }
+    .metric span { display: block; color: var(--muted); font-size: 12px; line-height: 1.35; }
+
+    section { padding: 54px 0; }
+
+    .section-head { margin-bottom: 26px; max-width: 850px; }
+
+    .kicker {
+      color: var(--cyan);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+
+    h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.2; }
+
+    p { color: var(--muted); margin: 0; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 14px 44px rgba(0,0,0,.18);
+    }
+
+    .card.highlight { border-color: rgba(36,216,255,.32); background: linear-gradient(180deg, rgba(36,216,255,.08), rgba(17,24,39,.82)); }
+    .card.violet { border-color: rgba(182,108,255,.26); }
+    .card.green { border-color: rgba(114,255,182,.24); }
+    .card.gold { border-color: rgba(255,211,107,.24); }
+
+    .role-list { display: grid; gap: 14px; margin-top: 18px; }
+
+    .role-item {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+
+    .icon {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background: rgba(36,216,255,.11);
+      color: var(--cyan);
+      font-weight: 900;
+    }
+
+    .role-item strong { display: block; margin-bottom: 3px; }
+    .role-item span { color: var(--muted); font-size: 14px; }
+
+    .loop {
+      counter-reset: loop;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .loop-step {
+      position: relative;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      min-height: 160px;
+    }
+
+    .loop-step::before {
+      counter-increment: loop;
+      content: counter(loop, decimal-leading-zero);
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      color: #03111f;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      font-weight: 950;
+    }
+
+    .loop-step strong { display: block; margin-bottom: 7px; font-size: 16px; }
+    .loop-step span { color: var(--muted); font-size: 14px; }
+
+    .system-map {
+      padding: 26px;
+      border: 1px solid rgba(36,216,255,.24);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(15,23,42,.94), rgba(8,13,24,.94));
+      box-shadow: var(--shadow);
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .node {
+      position: relative;
+      display: grid;
+      align-items: center;
+      min-height: 82px;
+      padding: 13px;
+      border-radius: 18px;
+      text-align: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      font-weight: 900;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .node:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 50%;
+      transform: translate(50%, -50%);
+      color: var(--cyan);
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .node.cyan { border-color: rgba(36,216,255,.4); background: rgba(36,216,255,.08); }
+    .node.violet { border-color: rgba(182,108,255,.38); background: rgba(182,108,255,.08); }
+    .node.green { border-color: rgba(114,255,182,.32); background: rgba(114,255,182,.07); }
+    .node.gold { border-color: rgba(255,211,107,.32); background: rgba(255,211,107,.06); }
+
+    .diagram-title { margin: 0 0 16px; color: #dbe7ff; font-weight: 900; }
+
+    .codebox {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #080c14;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .codebox-header {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+    .dot:nth-child(2) { background: var(--gold); }
+    .dot:nth-child(3) { background: var(--green); }
+
+    pre {
+      margin: 0;
+      padding: 22px;
+      overflow: auto;
+      color: #d7e4f8;
+      font: 14px/1.55 "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+    }
+
+    .accent { color: var(--cyan); }
+    .good { color: var(--green); }
+    .warn { color: var(--gold); }
+    .bad { color: var(--red); }
+    .purple { color: var(--violet); }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .shot {
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      box-shadow: 0 16px 48px rgba(0,0,0,.2);
+    }
+
+    .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .shot .soon-media { height: 100%; min-height: 220px; border-bottom: 0; }
+    .shot-caption { padding: 14px 16px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+
+    .small-shots { display: grid; gap: 18px; }
+
+    .list { display: grid; gap: 12px; margin-top: 16px; }
+    .list-item { display: flex; gap: 11px; color: var(--muted); }
+    .list-item::before { content: "✦"; color: var(--cyan); flex: 0 0 auto; }
+
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .status-list { display: grid; gap: 10px; margin-top: 16px; }
+    .status-line { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(148,163,184,.16); color: var(--muted); }
+    .status-line strong { color: var(--text); }
+    .badge { color: #06131d; background: var(--green); border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 900; white-space: nowrap; }
+    .badge.progress { background: var(--gold); }
+
+    .footer {
+      padding: 46px 0 70px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .grid-2, .image-grid, .status-grid { grid-template-columns: 1fr; }
+      .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-row { grid-template-columns: 1fr; }
+      .node:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -20px; transform: translateX(50%); }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 24px, var(--max)); }
+      .hero { padding-top: 48px; }
+      .grid-3, .grid-4, .metric-grid, .loop { grid-template-columns: 1fr; }
+      .topbar-inner { min-height: 58px; }
+      section { padding: 42px 0; }
+      .card { padding: 20px; }
+      pre { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="back-link" href="../index.html">← Назад в портфолио</a>
+      <nav class="nav-links" aria-label="Навигация по странице">
+        <a href="#overview">Об игре</a>
+        <a href="#architecture">Архитектура</a>
+        <a href="#systems">Системы</a>
+        <a href="#status">Статус</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="video-soon" aria-label="Временный блок для будущего видео">
+      <div class="soon-media">soon</div>
+    </div>
+
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Unity / C# Gameplay Case Study</span>
+          <h1><span class="gradient-text">Калибр Хаоса</span><br />Caliber of Chaos</h1>
+          <p class="lead">2D / 2.5D action-puzzle shooter, где цветные выстрелы не только наносят урон, но и меняют состояние поля боя.</p>
+          <p class="sublead">Враги и объекты защищены elemental seals. Игрок должен выбрать правильный элемент, снять печать, очистить заражение, трансформировать окружение и только потом добивать цель. Это не просто шутер — это бой, где пуля является инструментом мутации, очищения и тактического решения.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank" rel="noreferrer">Играть в прототип</a>
+            <a class="btn btn-secondary" href="#architecture">Смотреть архитектуру</a>
           </div>
-        </section>
+          <div class="chips" aria-label="Теги проекта">
+            <span class="chip">Unity 6</span>
+            <span class="chip">C#</span>
+            <span class="chip">Top-down Shooter</span>
+            <span class="chip">Action-Puzzle</span>
+            <span class="chip">Roguelite Prototype</span>
+            <span class="chip">ScriptableObject Architecture</span>
+            <span class="chip">Object Pooling</span>
+          </div>
+        </div>
 
-        <aside class="card">
-          <h3>Моя роль / вклад</h3>
-          <p>Solo Unity / C# Gameplay Developer - реализовал системы игрока, переключение оружия, логику снарядов, поведение врагов и flow WebGL-демо.</p>
-          <h3 style="margin-top:12px">Технический фокус</h3>
-          <ul>
-            <li>Компонентная архитектура gameplay-систем</li>
-            <li>Разделение логики снарядов и обработки столкновений</li>
-            <li>Поведение врагов и системы мутаций</li>
-            <li>Подготовка к object pooling и масштабированию боя на печатях</li>
-          </ul>
+        <aside class="hero-card" aria-label="Краткая информация о проекте">
+          <div class="soon-media" role="img" aria-label="Временное место для изображения">soon</div>
+          <div class="hero-card-info">
+            <div class="metric-grid">
+              <div class="metric"><strong>Solo</strong><span>Game Designer + Unity/C# Developer</span></div>
+              <div class="metric"><strong>4</strong><span>основных элемента: Bio, Crystal, Purge, Gold</span></div>
+              <div class="metric"><strong>3</strong><span>слоя оружия: Frame / Core / Mod</span></div>
+            </div>
+          </div>
         </aside>
       </div>
+    </section>
 
-      <!-- Implemented systems as cards -->
-      <section>
-        <h3 style="margin-bottom:12px">Реализованные gameplay-системы</h3>
-        <div class="systems-grid">
-          <div class="card">
-            <h3>Система элементального боя</h3>
-            <p>Несколько типов элементов (Bio Red, Crystal Blue, Purge Green, Gold Yellow) меняют взаимодействие оружия с врагами и окружением.</p>
-          </div>
-          <div class="card">
-            <h3>Система печатей</h3>
-            <p>Печати защищают врагов и объекты - их нужно ломать подходящими элементами, чтобы открыть возможность наносить урон.</p>
-          </div>
-          <div class="card">
-            <h3>Поведение врагов</h3>
-            <p>Логика ближнего боя, стрелков, патрулей, элитных врагов и спавнеров с мутациями, которые меняют паттерны поведения.</p>
-          </div>
-          <div class="card">
-            <h3>Система мутаций / биомов</h3>
-            <p>Зоны изменяют землю, врагов и объекты - Purge Green может очищать и трансформировать элементы окружения.</p>
-          </div>
-          <div class="card">
-            <h3>Союзники из окружения</h3>
-            <p>Трансформируемые объекты, например деревья и устройства, могут становиться временными союзниками в бою.</p>
-          </div>
+    <section id="overview">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Project Overview</div>
+          <h2>Главный hook: стрельба меняет правила боя</h2>
         </div>
-      </section>
-
-      <!-- Architecture -->
-      <section class="arch card">
-        <h3>Техническая архитектура</h3>
-        <p>Кодовая база делает акцент на небольших сфокусированных компонентах, чтобы систему было проще поддерживать и расширять.</p>
-        <pre><code>Player
-├── PlayerMovement
-├── PlayerWeapon
-├── InteractionHandler
-└── Inventory
-
-Weapon
-├── WeaponFrame
-├── WeaponCore
-├── WeaponMod
-└── BulletSpawner
-
-Enemy
-├── EnemyMovement
-├── EnemyBehaviour
-├── Health
-├── MutationController
-└── SpellNodesCounter
-
-Bullet
-├── BulletMover
-├── BulletView
-├── BulletContext
-└── Impact Processing</code></pre>
-      </section>
-
-      <!-- Problem / Solution -->
-      <section class="card">
-        <h3>Технический вызов - проблема → риск → решение → результат</h3>
-        <h4>Проблема</h4>
-        <p>Логика столкновений снарядов объединяла слишком много ответственностей: урон, печати, мутации, фракции и возврат в пул. Из-за этого ее становилось сложно поддерживать.</p>
-        <h4>Риск</h4>
-        <p>Рост сложности замедлял итерации и повышал шанс ошибок при добавлении новых элементальных эффектов.</p>
-        <h4>Решение</h4>
-        <p>Я разделил ответственности снаряда: движение, визуал, обработку столкновений, правила урона, взаимодействие с печатями и возврат в пул.</p>
-        <h4>Результат</h4>
-        <p>Получился более чистый и расширяемый pipeline снарядов, который ускоряет работу с элементальными эффектами и снижает количество побочных эффектов.</p>
-      </section>
-
-      <!-- Roadmap / Status -->
-      <section class="card">
-        <h3>Roadmap / текущий статус</h3>
-        <ul>
-          <li>Базовая стрельба - реализовано ✓</li>
-          <li>Прототипы поведения врагов - реализовано ✓</li>
-          <li>Система печатей - реализовано ✓</li>
-          <li>Взаимодействия с мутациями - реализовано ✓</li>
-          <li>Играбельный демо-билд - реализовано ✓</li>
-          <li>Больше вариаций врагов - в работе ⚙</li>
-          <li>Улучшение UI feedback и polish - в работе ⚙</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h3>Что демонстрирует проект</h3>
-        <div class="feature-cards">
-          <div class="card"><strong>Gameplay programming на Unity</strong></div>
-          <div class="card"><strong>Компонентная архитектура на C#</strong></div>
-          <div class="card"><strong>Поведение и AI врагов</strong></div>
-          <div class="card"><strong>Системы элементального боя</strong></div>
-          <div class="card"><strong>Системы взаимодействия с объектами</strong></div>
-          <div class="card"><strong>Workflow от прототипа к демо</strong></div>
+        <div class="grid-2">
+          <article class="card highlight">
+            <h3>Что делает игру уникальной</h3>
+            <p>Обычно в twin-stick shooter пуля — это просто урон. В «Калибре Хаоса» пуля несёт element, mutation context, faction, modifiers и impact rules. Она может ломать печати, очищать заражение, заряжать узлы, менять цвет земли, превращать объекты в союзников или запускать взрывную реакцию.</p>
+            <div class="list">
+              <div class="list-item">Бой строится вокруг выбора правильного цвета, а не только вокруг точности.</div>
+              <div class="list-item">Окружение становится частью боевой системы: деревья, узлы, щиты, гнёзда, земля и враги реагируют на элемент.</div>
+              <div class="list-item">Игрок чувствует себя не только стрелком, но и очистителем мира: часть боя — разрушение, часть — спасение.</div>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Моя роль</h3>
+            <p>Проект сделан как solo prototype: я проектировал core loop, писал gameplay systems, собирал архитектуру, настраивал Unity-префабы, тестировал взаимодействия и доводил систему до playable demo.</p>
+            <div class="role-list">
+              <div class="role-item"><span class="icon">GD</span><div><strong>Game Designer</strong><span>Спроектировал fantasy очищения, elemental combat, seals, nests, risk/reward и структуру уровней.</span></div></div>
+              <div class="role-item"><span class="icon">C#</span><div><strong>Gameplay Programmer</strong><span>Реализовал оружие, пули, врагов, мутацию, урон, UI feedback, inventory и flow уровня.</span></div></div>
+              <div class="role-item"><span class="icon">SA</span><div><strong>Systems Architect</strong><span>Разложил сложный бой на маленькие компоненты, pipeline handlers, ScriptableObject configs и переиспользуемые модули.</span></div></div>
+            </div>
+          </article>
         </div>
-      </section>
-
-      <!-- Final CTA -->
-      <div class="final-cta">
-        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Играть в демо на Itch.io</a>
       </div>
+    </section>
 
-    </main>
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Core Gameplay Loop</div>
+          <h2>От заражённой зоны до очищения этажа</h2>
+        </div>
+        <div class="loop">
+          <div class="loop-step"><strong>Войти в зону</strong><span>Игрок попадает в заражённую комнату с врагами, узлами, гнездом или закрытым проходом.</span></div>
+          <div class="loop-step"><strong>Считать цвет печати</strong><span>У врага или объекта есть active seal: Bio Red, Crystal Blue, Purge Green или Gold Yellow.</span></div>
+          <div class="loop-step"><strong>Выбрать оружие</strong><span>Игрок переключает weapon core / weapon slot и стреляет правильным элементом.</span></div>
+          <div class="loop-step"><strong>Сломать защиту</strong><span>Правильный цвет снимает печать или заряжает узел; неправильный может сбросить прогресс.</span></div>
+          <div class="loop-step"><strong>Нанести HP damage</strong><span>После снятия защиты обычный damage pipeline начинает работать по здоровью цели.</span></div>
+          <div class="loop-step"><strong>Очистить или мутировать</strong><span>Purge очищает, другие элементы меняют свойства объектов, земли и врагов.</span></div>
+          <div class="loop-step"><strong>Получить награду</strong><span>Игрок получает essence, доступ к сундуку, проходу, порталу или новой сборке оружия.</span></div>
+          <div class="loop-step"><strong>Идти выше</strong><span>Цикл масштабируется в башни, этажи, босса и мету крафта амулетов из частей монстров.</span></div>
+        </div>
+      </div>
+    </section>
 
-  </body>
+    <section id="architecture">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Technical Architecture</div>
+          <h2>Сложная механика собрана из маленьких понятных систем</h2>
+        </div>
+
+        <div class="system-map">
+          <p class="diagram-title">Weapon → Bullet → Impact Pipeline → World Reaction</p>
+          <div class="flow-row" aria-label="Схема архитектуры оружия и пули">
+            <div class="node cyan">WeaponFrame<br><small>форма выстрела</small></div>
+            <div class="node violet">WeaponCore<br><small>элемент</small></div>
+            <div class="node green">WeaponMod<br><small>поведение</small></div>
+            <div class="node gold">BulletContext<br><small>данные выстрела</small></div>
+            <div class="node cyan">BulletMover<br><small>движение</small></div>
+            <div class="node violet">Impact Pipeline<br><small>цепочка правил</small></div>
+            <div class="node green">Damage / Seal / Mutation<br><small>результат</small></div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:18px;">
+          <article class="card">
+            <h3>WeaponFrame</h3>
+            <p>Задаёт форму оружия: pistol, auto, shotgun, mortar, fire rate, spread, bullet speed, gravity mode и количество снарядов.</p>
+          </article>
+          <article class="card violet">
+            <h3>WeaponCore</h3>
+            <p>Определяет элемент и смысл выстрела: Bio, Crystal, Purge, Gold. Core влияет на damage, emission color и реакцию мира.</p>
+          </article>
+          <article class="card green">
+            <h3>WeaponMod</h3>
+            <p>Добавляет поведение пули: Simple, Homing, Explosive, fragments. Модуль не ломает frame/core, а расширяет их.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="systems">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Implemented Gameplay Systems</div>
+          <h2>Что уже показывает мой уровень как Unity/C# специалиста</h2>
+        </div>
+        <div class="grid-2">
+          <article class="card highlight">
+            <h3>Bullet Impact Pipeline</h3>
+            <p>Пуля не превращена в огромный монолитный класс. Вместо этого она проходит цепочку impact handlers. Каждый handler отвечает за маленькую часть: игнор слоёв, faction rules, shields, ground mutation, mutation objects, spell nodes, damage, explosion и despawn.</p>
+            <div class="codebox" style="margin-top:18px;">
+              <div class="codebox-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span> BulletImpactPipeline.cs</div>
+<pre>BulletImpactContext context = new(...);
+
+foreach (BulletImpactHandler handler in handlers)
+{
+    handler.Handle(context);
+
+    if (context.IsResolved)
+        break;
+}
+
+if (!context.StopProcessing)
+    context.StopAndDespawn();</pre>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Почему это сильное архитектурное решение</h3>
+            <p>Когда у проекта появляются seals, shields, mutation, explosive bullets, faction rules и разные типы объектов, простая логика OnCollision быстро разрастается. Pipeline позволяет добавлять новые реакции мира без переписывания всей пули.</p>
+            <div class="list">
+              <div class="list-item">Open/Closed подход: новый эффект = новый handler.</div>
+              <div class="list-item">Пуля переносит context, но не знает деталей всех целей.</div>
+              <div class="list-item">Порядок обработки виден в Inspector и легко дебажится.</div>
+              <div class="list-item">Система готова к расширению: ricochet, poison pools, armor, boss phases, destructible props.</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="image-grid" style="margin-top:20px;">
+          <figure class="shot">
+            <div class="soon-media" role="img" aria-label="Временное место для скриншота">soon</div>
+            <figcaption class="shot-caption">Кодовая сторона pipeline: контекст попадания проходит через обработчики и останавливается, когда взаимодействие решено.</figcaption>
+          </figure>
+          <div class="small-shots">
+            <figure class="shot">
+              <div class="soon-media" role="img" aria-label="Временное место для скриншота">soon</div>
+              <figcaption class="shot-caption">Prefab пули: отдельные компоненты для движения, физики и impact логики.</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="soon-media" role="img" aria-label="Временное место для скриншота">soon</div>
+              <figcaption class="shot-caption">Enemy prefab: Health, EnemyMovement, Behaviour, SpellNodesCounter, MutationController и special force пресеты.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-top:20px;">
+          <article class="card"><h3>Enemy AI</h3><p>Враги собраны из поведения, движения, атаки, health, target detection и mutation controller. Есть melee, shooter, patrol, friendly attacker и spawner-driven logic.</p></article>
+          <article class="card"><h3>Mutation System</h3><p>ElementType влияет на ground, enemies и objects. Crystal может замедлять, Bio заражать, Purge очищать, Gold усиливать через отдельные presets.</p></article>
+          <article class="card"><h3>Seal System</h3><p>Spell nodes и elemental seals создают puzzle-layer поверх шутера: урон по HP разрешён только после правильного элемента.</p></article>
+          <article class="card"><h3>Spawner System</h3><p>Спавнеры используют режимы MaintainAlive, FiniteWave, Burst/Single, budget и max-alive ограничения, чтобы собирать разные encounter patterns.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">System Breakdown</div>
+          <h2>Архитектура проекта в виде карты компонентов</h2>
+        </div>
+        <div class="grid-2">
+          <div class="codebox">
+            <div class="codebox-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span> Gameplay Composition</div>
+<pre><span class="accent">Player</span>
+ ├─ PlayerMovement
+ ├─ PlayerWeapon
+ ├─ GroundDetector
+ ├─ Inventory
+ └─ GameFlow interaction
+
+<span class="accent">Weapon</span>
+ ├─ WeaponFrame  <span class="warn">// rate, spread, gravity, projectiles</span>
+ ├─ WeaponCore   <span class="warn">// element, damage, emission</span>
+ ├─ WeaponMod    <span class="warn">// simple, homing, explosive</span>
+ └─ BulletSpawner + Pool
+
+<span class="accent">Bullet</span>
+ ├─ BulletContext
+ ├─ BulletMover
+ ├─ Rigidbody + Collider
+ └─ BulletImpactPipeline</pre>
+          </div>
+          <div class="codebox">
+            <div class="codebox-header"><span class="dot"></span><span class="dot"></span><span class="dot"></span> Enemy / World Composition</div>
+<pre><span class="purple">Enemy</span>
+ ├─ Health
+ ├─ EnemyMovement <span class="warn">// NavMeshAgent</span>
+ ├─ EnemyBehaviour
+ ├─ TargetDetector
+ ├─ AttackDetector / Hitbox
+ ├─ SpellNodesCounter
+ └─ MutationControllerEnemy
+
+<span class="purple">World Objects</span>
+ ├─ MutationObject
+ ├─ TransformationObject
+ ├─ ElementChargeCounter
+ ├─ SpecialForce
+ └─ Visual via MaterialPropertyBlock</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Design Value</div>
+          <h2>Почему эта система интересна для игрока</h2>
+        </div>
+        <div class="grid-3">
+          <article class="card highlight"><h3>Бой как чтение ситуации</h3><p>Игрок смотрит не только на HP врага, но и на цвет печати, тип мутации, позицию врагов, состояние земли и объекты рядом.</p></article>
+          <article class="card violet"><h3>Оружие как конструктор</h3><p>Frame/Core/Mod дают масштабируемую базу: новые типы оружия можно собирать комбинациями, а не писать каждый ствол заново.</p></article>
+          <article class="card green"><h3>Мир как игровая система</h3><p>Окружение не декоративное: оно мутирует, очищается, блокирует путь, помогает игроку или усиливает угрозу.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="status">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Current Status</div>
+          <h2>Прототип уже демонстрирует playable core и системную глубину</h2>
+        </div>
+        <div class="status-grid">
+          <article class="card">
+            <h3>Реализовано</h3>
+            <div class="status-list">
+              <div class="status-line"><strong>Core shooting</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Weapon switching</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Bullet Impact Pipeline</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Enemy behaviour prototypes</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Seal / Spell Node logic</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Mutation object interactions</strong><span class="badge">Done</span></div>
+              <div class="status-line"><strong>Playable WebGL prototype</strong><span class="badge">Done</span></div>
+            </div>
+          </article>
+          <article class="card gold">
+            <h3>В разработке</h3>
+            <div class="status-list">
+              <div class="status-line"><strong>More enemy variations</strong><span class="badge progress">In progress</span></div>
+              <div class="status-line"><strong>Better UI feedback</strong><span class="badge progress">In progress</span></div>
+              <div class="status-line"><strong>Floor goals and tower structure</strong><span class="badge progress">In progress</span></div>
+              <div class="status-line"><strong>Meta crafting: monster parts + essence</strong><span class="badge progress">Design</span></div>
+              <div class="status-line"><strong>Boss and biome progression</strong><span class="badge progress">Design</span></div>
+              <div class="status-line"><strong>Polish, VFX, balance</strong><span class="badge progress">In progress</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="card highlight">
+          <div class="section-head" style="margin-bottom:18px;">
+            <div class="kicker">What This Project Demonstrates</div>
+            <h2>Кейс показывает меня как разработчика, который умеет не только писать код, но и собирать игру в систему</h2>
+          </div>
+          <div class="grid-3">
+            <p><strong style="color:var(--text);">Gameplay Programming.</strong><br>Оружие, пули, столкновения, урон, enemy AI, spawners, interactable objects, inventory и game flow.</p>
+            <p><strong style="color:var(--text);">Game Systems Design.</strong><br>Цветные печати, очищение, мутация, risk/reward, башни, цели этажа, крафт и progression loop.</p>
+            <p><strong style="color:var(--text);">Scalable Architecture.</strong><br>Композиция компонентов, ScriptableObject configs, pipeline handlers, pooling, faction rules и расширяемые modules.</p>
+          </div>
+          <div class="hero-actions" style="margin-bottom:0;">
+            <a class="btn btn-primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank" rel="noreferrer">Открыть playable prototype</a>
+            <a class="btn btn-secondary" href="../index.html">Вернуться в портфолио</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© Tallmann / TMGameDev — Caliber of Chaos case study</span>
+      <span>Unity / C# / Gameplay Systems Architecture</span>
+    </div>
+  </footer>
+</body>
 </html>
