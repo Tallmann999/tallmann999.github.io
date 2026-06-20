@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Caliber of Chaos — Case Study</title>
+    <title>Caliber of Chaos - разбор проекта</title>
     <link rel="stylesheet" href="../styles.css" />
     <style>
       :root{
@@ -48,14 +48,13 @@
   <body>
 
     <header class="project-hero">
-      <a href="../index.html">← Back to Portfolio</a>
+      <a href="../index.html">← Назад к портфолио</a>
       <h1>Caliber of Chaos</h1>
-      <p class="project-subtitle">2D top-down action shooter prototype about cleansing a corrupted world.</p>
-
+      <p class="project-subtitle">Прототип 2D top-down action shooter о зачистке зараженного мира.</p>
 
       <div class="hero-ctas">
-        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Play Demo</a>
-        <a class="button muted" href="../index.html">Back to Portfolio</a>
+        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Играть в демо</a>
+        <a class="button muted" href="../index.html">Назад к портфолио</a>
       </div>
     </header>
 
@@ -63,145 +62,145 @@
 
       <!-- Big media / GIF (left empty until asset available) -->
       <div class="media-wrap">
-        <img id="project-gif" src="../assets/projects/caliber-of-chaos/gameplay.gif" alt="Caliber of Chaos gameplay GIF" style="max-width:100%;max-height:100%;display:block;" onerror="this.style.display='none';document.getElementById('gif-placeholder').style.display='flex'" />
-        <div id="gif-placeholder" class="media-placeholder" style="display:none">Gameplay GIF coming soon — 5–10s demo clip</div>
+        <img id="project-gif" src="../assets/projects/caliber-of-chaos/gameplay.gif" alt="GIF с геймплеем Caliber of Chaos" style="max-width:100%;max-height:100%;display:block;" onerror="this.style.display='none';document.getElementById('gif-placeholder').style.display='flex'" />
+        <div id="gif-placeholder" class="media-placeholder" style="display:none">Gameplay GIF скоро появится - демо-клип на 5-10 секунд</div>
       </div>
 
       <!-- Quick summary cards -->
       <div class="feature-cards">
-        <div class="card"><h3>Role</h3><p>Unity / C# Gameplay Developer</p></div>
-        <div class="card"><h3>Genre</h3><p>2D Top-Down Action Shooter / Roguelite</p></div>
-        <div class="card"><h3>Core Hook</h3><p>Elemental seal-based combat that mixes shooter action with puzzle decisions</p></div>
-        <div class="card"><h3>Build</h3><p>WebGL playable demo</p></div>
+        <div class="card"><h3>Роль</h3><p>Unity / C# Gameplay Developer</p></div>
+        <div class="card"><h3>Жанр</h3><p>2D top-down action shooter / roguelite</p></div>
+        <div class="card"><h3>Ключевая идея</h3><p>Боевая система реализованна </p></div>
+        <div class="card"><h3>Билд</h3><p>Играбельное WebGL-демо</p></div>
       </div>
 
       <!-- Core idea and layout two-column -->
       <div class="two-col">
         <section class="card">
-          <h3>Core Idea</h3>
-          <p>Caliber of Chaos centers on elemental seals: enemies and objects are protected by elements that require matching weapon elements to break. This creates a combat-puzzle layer on top of fast shooter gameplay.</p>
-          <h4 style="margin-top:12px">Core Gameplay Loop</h4>
+          <h3>Основная идея</h3>
+          <p>Caliber of Chaos строится вокруг элементальных печатей: враги и объекты защищены стихиями, а для взлома защиты нужно подобрать соответствующий элемент оружия. Это добавляет к быстрому шутерному геймплею слой боевой головоломки.</p>
+          <h4 style="margin-top:12px">Основной игровой цикл</h4>
           <div class="timeline">
-            <div class="step">1. Enter corrupted area</div>
-            <div class="step">2. Identify seals & mutations</div>
-            <div class="step">3. Switch weapon element</div>
-            <div class="step">4. Break seals & damage</div>
-            <div class="step">5. Clean objects / gain allies</div>
+            <div class="step">1. Войти в зараженную зону</div>
+            <div class="step">2. Определить печати и мутации</div>
+            <div class="step">3. Переключить элемент оружия</div>
+            <div class="step">4. Сломать печати и нанести урон</div>
+            <div class="step">5. Очистить объекты / получить союзников</div>
           </div>
         </section>
 
         <aside class="card">
-          <h3>My Role / Contribution</h3>
-          <p>Solo Unity / C# Gameplay Developer — implemented player systems, weapon switching, projectile logic, enemy behavior, and WebGL demo flow.</p>
-          <h3 style="margin-top:12px">Technical Focus</h3>
+          <h3>Моя роль / вклад</h3>
+          <p>Solo Unity / C# Gameplay Developer - реализовал системы игрока, переключение оружия, логику снарядов, поведение врагов и flow WebGL-демо.</p>
+          <h3 style="margin-top:12px">Технический фокус</h3>
           <ul>
-            <li>Component-based gameplay architecture</li>
-            <li>Projectile logic & collision separation</li>
-            <li>Enemy behaviour and mutation systems</li>
-            <li>Planned object pooling and seal-based combat scalability</li>
+            <li>Компонентная архитектура gameplay-систем</li>
+            <li>Разделение логики снарядов и обработки столкновений</li>
+            <li>Поведение врагов и системы мутаций</li>
+            <li>Подготовка к object pooling и масштабированию боя на печатях</li>
           </ul>
         </aside>
       </div>
 
       <!-- Implemented systems as cards -->
       <section>
-        <h3 style="margin-bottom:12px">Implemented Gameplay Systems</h3>
+        <h3 style="margin-bottom:12px">Реализованные gameplay-системы</h3>
         <div class="systems-grid">
           <div class="card">
-            <h3>Elemental Combat System</h3>
-            <p>Multiple element types (Bio Red, Crystal Blue, Purge Green, Gold Yellow) change weapon interactions and enemy reactions.</p>
+            <h3>Система элементального боя</h3>
+            <p>Несколько типов элементов (Bio Red, Crystal Blue, Purge Green, Gold Yellow) меняют взаимодействие оружия с врагами и окружением.</p>
           </div>
           <div class="card">
-            <h3>Seal System</h3>
-            <p>Seals protect enemies and objects — break seals with matching elements to enable damage.</p>
+            <h3>Система печатей</h3>
+            <p>Печати защищают врагов и объекты - их нужно ломать подходящими элементами, чтобы открыть возможность наносить урон.</p>
           </div>
           <div class="card">
-            <h3>Enemy Behavior</h3>
-            <p>Melee, shooter, patrol, elite and spawner logic with mutation states that alter patterns.</p>
+            <h3>Поведение врагов</h3>
+            <p>Логика ближнего боя, стрелков, патрулей, элитных врагов и спавнеров с мутациями, которые меняют паттерны поведения.</p>
           </div>
           <div class="card">
-            <h3>Mutation / Biome System</h3>
-            <p>Zones modify ground, enemies and objects — Purge Green can clean and transform objects.</p>
+            <h3>Система мутаций / биомов</h3>
+            <p>Зоны изменяют землю, врагов и объекты - Purge Green может очищать и трансформировать элементы окружения.</p>
           </div>
           <div class="card">
-            <h3>Environmental Allies</h3>
-            <p>Transformable objects (trees, devices) become temporary allies to assist in combat.</p>
+            <h3>Союзники из окружения</h3>
+            <p>Трансформируемые объекты, например деревья и устройства, могут становиться временными союзниками в бою.</p>
           </div>
         </div>
       </section>
 
       <!-- Architecture -->
       <section class="arch card">
-        <h3>Technical Architecture</h3>
-        <p>The codebase favors small, focused components for maintainability and extension.</p>
+        <h3>Техническая архитектура</h3>
+        <p>Кодовая база делает акцент на небольших сфокусированных компонентах, чтобы систему было проще поддерживать и расширять.</p>
         <pre><code>Player
- ├── PlayerMovement
- ├── PlayerWeapon
- ├── InteractionHandler
- └── Inventory
+├── PlayerMovement
+├── PlayerWeapon
+├── InteractionHandler
+└── Inventory
 
 Weapon
- ├── WeaponFrame
- ├── WeaponCore
- ├── WeaponMod
- └── BulletSpawner
+├── WeaponFrame
+├── WeaponCore
+├── WeaponMod
+└── BulletSpawner
 
 Enemy
- ├── EnemyMovement
- ├── EnemyBehaviour
- ├── Health
- ├── MutationController
- └── SpellNodesCounter
+├── EnemyMovement
+├── EnemyBehaviour
+├── Health
+├── MutationController
+└── SpellNodesCounter
 
 Bullet
- ├── BulletMover
- ├── BulletView
- ├── BulletContext
- └── Impact Processing</code></pre>
+├── BulletMover
+├── BulletView
+├── BulletContext
+└── Impact Processing</code></pre>
       </section>
 
       <!-- Problem / Solution -->
       <section class="card">
-        <h3>Technical Challenge — Problem → Risk → Solution → Result</h3>
-        <h4>Problem</h4>
-        <p>Bullet collision logic consolidated many responsibilities (damage, seals, mutation, faction, pooling), becoming hard to maintain.</p>
-        <h4>Risk</h4>
-        <p>Growing complexity slowed iteration and added bugs when adding new elemental effects.</p>
-        <h4>Solution</h4>
-        <p>Split bullet responsibilities: movement, visuals, collision processing, damage rules, seal interaction, and pool return logic.</p>
-        <h4>Result</h4>
-        <p>Cleaner, extensible bullet pipeline enabling fast iteration on elemental effects and fewer side-effects.</p>
+        <h3>Технический вызов - проблема → риск → решение → результат</h3>
+        <h4>Проблема</h4>
+        <p>Логика столкновений снарядов объединяла слишком много ответственностей: урон, печати, мутации, фракции и возврат в пул. Из-за этого ее становилось сложно поддерживать.</p>
+        <h4>Риск</h4>
+        <p>Рост сложности замедлял итерации и повышал шанс ошибок при добавлении новых элементальных эффектов.</p>
+        <h4>Решение</h4>
+        <p>Я разделил ответственности снаряда: движение, визуал, обработку столкновений, правила урона, взаимодействие с печатями и возврат в пул.</p>
+        <h4>Результат</h4>
+        <p>Получился более чистый и расширяемый pipeline снарядов, который ускоряет работу с элементальными эффектами и снижает количество побочных эффектов.</p>
       </section>
 
       <!-- Roadmap / Status -->
       <section class="card">
-        <h3>Roadmap / Current Status</h3>
+        <h3>Roadmap / текущий статус</h3>
         <ul>
-          <li>Core shooting — implemented ✅</li>
-          <li>Enemy behavior prototypes — implemented ✅</li>
-          <li>Seal system — implemented ✅</li>
-          <li>Mutation interactions — implemented ✅</li>
-          <li>Playable demo build — implemented ✅</li>
-          <li>More enemy variations — in progress ⚙️</li>
-          <li>Better UI feedback / polish — in progress ⚙️</li>
+          <li>Базовая стрельба - реализовано ✓</li>
+          <li>Прототипы поведения врагов - реализовано ✓</li>
+          <li>Система печатей - реализовано ✓</li>
+          <li>Взаимодействия с мутациями - реализовано ✓</li>
+          <li>Играбельный демо-билд - реализовано ✓</li>
+          <li>Больше вариаций врагов - в работе ⚙</li>
+          <li>Улучшение UI feedback и polish - в работе ⚙</li>
         </ul>
       </section>
 
       <section class="card">
-        <h3>What This Project Demonstrates</h3>
+        <h3>Что демонстрирует проект</h3>
         <div class="feature-cards">
-          <div class="card"><strong>Unity gameplay programming</strong></div>
-          <div class="card"><strong>C# component-based architecture</strong></div>
-          <div class="card"><strong>Enemy AI behaviour</strong></div>
-          <div class="card"><strong>Elemental combat systems</strong></div>
-          <div class="card"><strong>Object interaction systems</strong></div>
-          <div class="card"><strong>Prototype→demo workflow</strong></div>
+          <div class="card"><strong>Gameplay programming на Unity</strong></div>
+          <div class="card"><strong>Компонентная архитектура на C#</strong></div>
+          <div class="card"><strong>Поведение и AI врагов</strong></div>
+          <div class="card"><strong>Системы элементального боя</strong></div>
+          <div class="card"><strong>Системы взаимодействия с объектами</strong></div>
+          <div class="card"><strong>Workflow от прототипа к демо</strong></div>
         </div>
       </section>
 
       <!-- Final CTA -->
       <div class="final-cta">
-        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Play Demo on Itch.io</a>
+        <a class="button primary" href="https://tallmann.itch.io/caliber-of-chaos" target="_blank">Играть в демо на Itch.io</a>
       </div>
 
     </main>
