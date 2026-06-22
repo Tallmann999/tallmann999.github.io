@@ -583,13 +583,6 @@
   </header>
 
   <main>
-    <div class="video-soon">
-      <video class="case-video" autoplay muted loop playsinline controls preload="metadata" poster="../assets/media/Caliber%20of%20Chaos.png" aria-label="Видео игрового процесса Caliber of Chaos">
-        <source src="../assets/media/Caliber%20of%20Chaos%20Video02.mp4" type="video/mp4">
-        Ваш браузер не поддерживает воспроизведение видео.
-      </video>
-    </div>
-
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
@@ -615,7 +608,8 @@
         <aside class="hero-card" aria-label="Краткая информация о проекте">
           <div class="hero-gallery" data-gallery aria-label="Скриншоты Caliber of Chaos">
             <div class="gallery-track" data-gallery-track tabindex="0">
-              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_01.png" alt="Скриншот Caliber of Chaos 1">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos.png" alt="Обложка Caliber of Chaos">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_01.png" alt="Скриншот Caliber of Chaos 1" loading="lazy">
               <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_02.png" alt="Скриншот Caliber of Chaos 2" loading="lazy">
               <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_03.png" alt="Скриншот Caliber of Chaos 3" loading="lazy">
               <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_04.png" alt="Скриншот Caliber of Chaos 4" loading="lazy">
@@ -623,7 +617,7 @@
             </div>
             <button class="gallery-arrow prev" type="button" data-gallery-prev aria-label="Предыдущий скриншот">‹</button>
             <button class="gallery-arrow next" type="button" data-gallery-next aria-label="Следующий скриншот">›</button>
-            <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / 5</span>
+            <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / 6</span>
           </div>
           <div class="hero-card-info">
             <div class="metric-grid">
@@ -635,6 +629,13 @@
         </aside>
       </div>
     </section>
+
+    <div class="video-soon">
+      <video class="case-video" autoplay muted loop playsinline controls preload="metadata" poster="../assets/media/Caliber%20of%20Chaos.png" aria-label="Видео игрового процесса Caliber of Chaos">
+        <source src="../assets/media/Caliber%20of%20Chaos%20Video02.mp4" type="video/mp4">
+        Ваш браузер не поддерживает воспроизведение видео.
+      </video>
+    </div>
 
     <section id="overview">
       <div class="wrap">
@@ -928,6 +929,12 @@ if (!context.StopProcessing)
         counter.textContent = `${currentIndex + 1} / ${slides.length}`;
       };
 
+      const resetGallery = () => {
+        currentIndex = 0;
+        track.scrollTo({ left: 0, behavior: 'auto' });
+        counter.textContent = `1 / ${slides.length}`;
+      };
+
       gallery.querySelector('[data-gallery-prev]').addEventListener('click', () => showSlide(currentIndex - 1));
       gallery.querySelector('[data-gallery-next]').addEventListener('click', () => showSlide(currentIndex + 1));
       track.addEventListener('scroll', updateCounter, { passive: true });
@@ -937,6 +944,8 @@ if (!context.StopProcessing)
           showSlide(currentIndex + (event.key === 'ArrowRight' ? 1 : -1));
         }
       });
+      window.addEventListener('pageshow', resetGallery);
+      resetGallery();
     });
   </script>
 </body>
