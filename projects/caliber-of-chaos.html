@@ -226,6 +226,85 @@
       overflow: hidden;
     }
 
+    .case-video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #07111f;
+    }
+
+    .hero-gallery {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: #07111f;
+    }
+
+    .gallery-track {
+      display: flex;
+      width: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      touch-action: pan-x;
+      overscroll-behavior-x: contain;
+    }
+
+    .gallery-track::-webkit-scrollbar { display: none; }
+
+    .gallery-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 50%;
+      background: rgba(7,17,31,.76);
+      color: #fff;
+      font-size: 27px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .gallery-arrow:hover {
+      background: rgba(36,216,255,.88);
+      border-color: var(--cyan);
+      color: #06131d;
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .gallery-arrow:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    .gallery-arrow.prev { left: 14px; }
+    .gallery-arrow.next { right: 14px; }
+
+    .gallery-counter {
+      position: absolute;
+      z-index: 2;
+      right: 14px;
+      bottom: 12px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      background: rgba(7,17,31,.76);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .hero-card-info { position: relative; padding: 20px; display: grid; gap: 12px; }
 
     .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -485,6 +564,8 @@
       section { padding: 42px 0; }
       .card { padding: 20px; }
       pre { font-size: 12px; }
+      .video-soon { width: calc(100% - 24px); margin-top: 20px; }
+      .gallery-arrow { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -502,8 +583,11 @@
   </header>
 
   <main>
-    <div class="video-soon" aria-label="Временный блок для будущего видео">
-      <div class="soon-media">soon</div>
+    <div class="video-soon">
+      <video class="case-video" autoplay muted loop playsinline controls preload="metadata" poster="../assets/media/Caliber%20of%20Chaos.png" aria-label="Видео игрового процесса Caliber of Chaos">
+        <source src="../assets/media/Caliber%20of%20Chaos%20Video02.mp4" type="video/mp4">
+        Ваш браузер не поддерживает воспроизведение видео.
+      </video>
     </div>
 
     <section class="hero">
@@ -529,7 +613,18 @@
         </div>
 
         <aside class="hero-card" aria-label="Краткая информация о проекте">
-          <div class="soon-media" role="img" aria-label="Временное место для изображения">soon</div>
+          <div class="hero-gallery" data-gallery aria-label="Скриншоты Caliber of Chaos">
+            <div class="gallery-track" data-gallery-track tabindex="0">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_01.png" alt="Скриншот Caliber of Chaos 1">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_02.png" alt="Скриншот Caliber of Chaos 2" loading="lazy">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_03.png" alt="Скриншот Caliber of Chaos 3" loading="lazy">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_04.png" alt="Скриншот Caliber of Chaos 4" loading="lazy">
+              <img class="gallery-slide" src="../assets/media/Caliber%20of%20Chaos%20_Pic_05.png" alt="Скриншот Caliber of Chaos 5" loading="lazy">
+            </div>
+            <button class="gallery-arrow prev" type="button" data-gallery-prev aria-label="Предыдущий скриншот">‹</button>
+            <button class="gallery-arrow next" type="button" data-gallery-next aria-label="Следующий скриншот">›</button>
+            <span class="gallery-counter" data-gallery-counter aria-live="polite">1 / 5</span>
+          </div>
           <div class="hero-card-info">
             <div class="metric-grid">
               <div class="metric"><strong>Solo</strong><span>Game Designer + Unity/C# Developer</span></div>
@@ -815,5 +910,34 @@ if (!context.StopProcessing)
       <span>Unity / C# / Gameplay Systems Architecture</span>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+      const track = gallery.querySelector('[data-gallery-track]');
+      const slides = Array.from(track.querySelectorAll('.gallery-slide'));
+      const counter = gallery.querySelector('[data-gallery-counter]');
+      let currentIndex = 0;
+
+      const updateCounter = () => {
+        currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+        counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+      };
+
+      const showSlide = (index) => {
+        currentIndex = (index + slides.length) % slides.length;
+        track.scrollTo({ left: currentIndex * track.clientWidth, behavior: 'smooth' });
+        counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+      };
+
+      gallery.querySelector('[data-gallery-prev]').addEventListener('click', () => showSlide(currentIndex - 1));
+      gallery.querySelector('[data-gallery-next]').addEventListener('click', () => showSlide(currentIndex + 1));
+      track.addEventListener('scroll', updateCounter, { passive: true });
+      track.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          showSlide(currentIndex + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+      });
+    });
+  </script>
 </body>
 </html>
